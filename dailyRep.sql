@@ -1,28 +1,28 @@
 
 
-/**人员排班*/
+/**浜哄憳鎺掔彮*/
 SELECT s.id staff_id,s.staff_name ,d.id dept_id,d.dept_name,sc.start_time,sc.end_time,c.class_name,c.start_work_time
 ,c.end_work_time,
 CONCAT(
 	CASE
-		WHEN  (SELECT MIN(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)) <=sc.start_time THEN '上午'
+		WHEN  (SELECT MIN(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)) <=sc.start_time THEN '涓婂崍'
 		ELSE CONVERT(VARCHAR(5),(SELECT MIN(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time > CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)),108) END
 ,
 '-'
 ,
 CASE
-		WHEN  (SELECT MAX(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)) >=sc.end_time THEN '下午'
+		WHEN  (SELECT MAX(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)) >=sc.end_time THEN '涓嬪崍'
 		ELSE CONVERT(VARCHAR(5),(SELECT MAX(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time > CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)),108) END
 
-)打卡数据,
-(SELECT COUNT(1) FROM ag_entry_record WHERE staff_id = s.id AND entry_time > CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)) 打卡次数,
+)鎵撳崱鏁版嵁,
+(SELECT COUNT(1) FROM ag_entry_record WHERE staff_id = s.id AND entry_time > CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)) 鎵撳崱娆℃暟,
 
-c.should_work_time  应该出勤,
+c.should_work_time  搴旇鍑哄嫟,
 DATEDIFF
 (mi,
 (SELECT MIN(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)),
 (SELECT MAX(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111))
-) - 60 实际出勤,
+) - 60 瀹為檯鍑哄嫟,
 CASE
 WHEN(
 DATEDIFF
@@ -38,12 +38,12 @@ sc.end_time,
 (SELECT MAX(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111))
 ))
 ELSE 0 END
-加班,
+鍔犵彮,
 DATEDIFF
 (mi,
 sc.start_time,
 (SELECT MIN(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111))
-) 迟到,
+) 杩熷埌,
 
 CASE
 WHEN(
@@ -59,7 +59,7 @@ DATEDIFF
 (SELECT MAX(entry_time) startTime FROM ag_entry_record WHERE staff_id = 1 AND entry_time >  CONVERT(VARCHAR(10),sc.start_time,111)  and entry_time < CONVERT(VARCHAR(10),DATEADD(day,1,sc.start_time),111)),
 sc.end_time
 )) 
-ELSE 0 END 早退
+ELSE 0 END 鏃╅��
 FROM
 	sys_staff s
 	LEFT JOIN sys_department d ON d.id = s.dept_id
