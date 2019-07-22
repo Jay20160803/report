@@ -1,0 +1,9 @@
+##添加字段
+att_overtime_bill.staff_id 
+att_leave_bill.staff_id 
+att_business_bill.staff_id 
+att_out_bill.staff_id
+
+att_schedule_class.dept_id
+att_schedule_class.entryTimes
+att_schedule_class.should_work_time
