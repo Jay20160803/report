@@ -7,3 +7,6 @@ att_out_bill.staff_id
 att_schedule_class.dept_id
 att_schedule_class.entryTimes
 att_schedule_class.should_work_time
+
+##添加表
+att_schedule_class_daily
