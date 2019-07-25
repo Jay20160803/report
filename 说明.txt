@@ -1,0 +1,4 @@
+存储过程
+1.dailyRepo 		------每天23点执行   将当天的考勤记录插入到表 att_schedule_class_daily 
+2.createMonthDetailRepo	------每天24点执行（月明细每天更新）   删除月备份表（att_month_detail_repo_yyyy_MM），备份月数据创建月备份表（att_month_detail_repo_yyyy_MM），删除月明细表，创建成月明细表（att_month_detail_repo）
+3.monthDetailRepoSetValue   ------2.createMonthDetailRepo执行时调用  设置月明细考勤状态	
