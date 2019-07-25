@@ -1,5 +1,5 @@
 
-SELECT md.* ,tmp*
+SELECT md.* ,tmp.*
 FROM 
 att_month_detail_repo md
 LEFT JOIN
@@ -24,8 +24,4 @@ GROUP BY staff_id
 )as tmp ON md.staff_id = tmp.staff_id
 	
 
-SELECT * FROM att_schedule_class_daily
 
-SELECT * FROM att_month_detail_repo
-
-select ceiling(0.1)
