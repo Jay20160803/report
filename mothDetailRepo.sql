@@ -22,6 +22,9 @@ FROM
 att_schedule_class_daily 
 GROUP BY staff_id
 )as tmp ON md.staff_id = tmp.staff_id
+
+
+
 	
 
 
